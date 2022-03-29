@@ -1,6 +1,7 @@
 import requests
 
 from src.schema.tags import schema_tag
+from src.schema.stacklets import schema_stacklet
 
 
 class Client(object):
@@ -17,6 +18,20 @@ class Client(object):
             },
         )
         return response.json()
+
+    def create_stacklets(self, data):
+        if schema_stacklet.is_valid(data):
+            response = requests.post(
+                "{}stacklets".format(self.url),
+                json=data,
+                headers={
+                    "Content-Type": "application/json",
+                    "Authorization": "Token {}".format(self.key),
+                },
+            )
+            return response.json()
+        else:
+            return schema_stacklet.validate(data)
 
     def stacklets(self, tag=""):
         response = requests.get(
