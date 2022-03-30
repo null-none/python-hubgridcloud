@@ -9,7 +9,7 @@ pip install hubgridcloud
 #### Examples
 
 ```python
-from hubgridcloud import Client
+from hubgridcloud.client import Client
 client = Client("KEY")
 client.account()
 client.stacklets()
