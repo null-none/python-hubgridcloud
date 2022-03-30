@@ -66,3 +66,55 @@ class Client(object):
             return response.json()
         else:
             return schema_tag.validate(data)
+
+
+    def regions(self):
+        response = requests.get(
+            "{}regions".format(self.url),
+            headers={
+                "Content-Type": "application/json",
+                "Authorization": "Token {}".format(self.key),
+            },
+        )
+        return response.json()
+
+    def sizes(self):
+        response = requests.get(
+            "{}sizes".format(self.url),
+            headers={
+                "Content-Type": "application/json",
+                "Authorization": "Token {}".format(self.key),
+            },
+        )
+        return response.json()
+
+    def distributions(self):
+        response = requests.get(
+            "{}distributions".format(self.url),
+            headers={
+                "Content-Type": "application/json",
+                "Authorization": "Token {}".format(self.key),
+            },
+        )
+        return response.json()
+
+    def applications(self):
+        response = requests.get(
+            "{}applications".format(self.url),
+            headers={
+                "Content-Type": "application/json",
+                "Authorization": "Token {}".format(self.key),
+            },
+        )
+        return response.json()
+
+
+    def containers(self):
+        response = requests.get(
+            "{}containers".format(self.url),
+            headers={
+                "Content-Type": "application/json",
+                "Authorization": "Token {}".format(self.key),
+            },
+        )
+        return response.json()
