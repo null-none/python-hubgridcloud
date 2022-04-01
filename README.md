@@ -21,4 +21,5 @@ client.sizes()
 client.distributions()
 client.applications()
 client.containers()
+client.keys()
 ```
