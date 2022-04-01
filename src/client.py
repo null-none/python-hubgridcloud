@@ -2,6 +2,7 @@ import requests
 
 from .schema.tags import schema_tag
 from .schema.stacklets import schema_stacklet
+from .schema.keys import schema_key
 
 
 class Client(object):
