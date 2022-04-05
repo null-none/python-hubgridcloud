@@ -38,7 +38,6 @@ class Client(object):
     def delete_stacklets(self, id):
         response = requests.delete(
             "{}stacklets/{}".format(self.url, id),
-            json=data,
             headers={
                 "Content-Type": "application/json",
                 "Authorization": "Token {}".format(self.key),
@@ -71,7 +70,6 @@ class Client(object):
     def delete_stags(self, id):
         response = requests.delete(
             "{}tags/{}".format(self.url, id),
-            json=data,
             headers={
                 "Content-Type": "application/json",
                 "Authorization": "Token {}".format(self.key),
@@ -158,6 +156,16 @@ class Client(object):
             return response.json()
         else:
             return schema_key.validate(data)
+
+    def delete_stags(self, id):
+        response = requests.delete(
+            "{}keys/{}".format(self.url, id),
+            headers={
+                "Content-Type": "application/json",
+                "Authorization": "Token {}".format(self.key),
+            },
+        )
+        return response.json()
 
     def keys(self):
         response = requests.get(
