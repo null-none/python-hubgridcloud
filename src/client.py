@@ -46,6 +46,17 @@ class Client(object):
         return response.json()
 
 
+    def detail_stacklets(self, id):
+        response = requests.get(
+            "{}stacklets/{}".format(self.url, id),
+            headers={
+                "Content-Type": "application/json",
+                "Authorization": "Token {}".format(self.key),
+            },
+        )
+        return response.json()
+
+
     def stacklets(self, tag=""):
         response = requests.get(
             "{}stacklets?tag_name=".format(self.url, tag),
@@ -67,7 +78,7 @@ class Client(object):
         return response.json()
 
 
-    def delete_stags(self, id):
+    def delete_tags(self, id):
         response = requests.delete(
             "{}tags/{}".format(self.url, id),
             headers={
@@ -76,6 +87,17 @@ class Client(object):
             },
         )
         return response.json()
+
+    def detail_tags(self, id):
+        response = requests.get(
+            "{}tags/{}".format(self.url, id),
+            headers={
+                "Content-Type": "application/json",
+                "Authorization": "Token {}".format(self.key),
+            },
+        )
+        return response.json()
+
 
     def create_tags(self, data):
         if schema_tag.is_valid(data):
