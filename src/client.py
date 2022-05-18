@@ -34,7 +34,6 @@ class Client(object):
         else:
             return schema_stacklet.validate(data)
 
-
     def delete_stacklets(self, id):
         response = requests.delete(
             "{}stacklets/{}".format(self.url, id),
@@ -44,7 +43,6 @@ class Client(object):
             },
         )
         return response.json()
-
 
     def detail_stacklets(self, id):
         response = requests.get(
@@ -56,6 +54,38 @@ class Client(object):
         )
         return response.json()
 
+    def power_on(self, id):
+        response = requests.post(
+            "{}stacklets/{}".format(self.url, id),
+            data={"action": "power_on"},
+            headers={
+                "Content-Type": "application/json",
+                "Authorization": "Token {}".format(self.key),
+            },
+        )
+        return response.json()
+
+    def power_off(self, id):
+        response = requests.post(
+            "{}stacklets/{}".format(self.url, id),
+            data={"action": "power_off"},
+            headers={
+                "Content-Type": "application/json",
+                "Authorization": "Token {}".format(self.key),
+            },
+        )
+        return response.json()
+
+    def power_cycle(self, id):
+        response = requests.post(
+            "{}stacklets/{}".format(self.url, id),
+            data={"action": "power_cycle"},
+            headers={
+                "Content-Type": "application/json",
+                "Authorization": "Token {}".format(self.key),
+            },
+        )
+        return response.json()
 
     def stacklets(self, tag=""):
         response = requests.get(
@@ -77,7 +107,6 @@ class Client(object):
         )
         return response.json()
 
-
     def delete_tags(self, id):
         response = requests.delete(
             "{}tags/{}".format(self.url, id),
@@ -98,7 +127,6 @@ class Client(object):
         )
         return response.json()
 
-
     def create_tags(self, data):
         if schema_tag.is_valid(data):
             response = requests.post(
@@ -112,7 +140,6 @@ class Client(object):
             return response.json()
         else:
             return schema_tag.validate(data)
-
 
     def regions(self):
         response = requests.get(
@@ -153,7 +180,6 @@ class Client(object):
             },
         )
         return response.json()
-
 
     def containers(self):
         response = requests.get(
