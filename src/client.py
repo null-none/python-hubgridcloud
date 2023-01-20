@@ -3,6 +3,11 @@ import requests
 from .schema.tags import schema_tag
 from .schema.stacklets import schema_stacklet
 from .schema.keys import schema_key
+from .schema.resize import schema_resize
+from .schema.snapshot import schema_snapshot
+from .schema.rename import schema_rename
+from .schema.rebuild import schema_rebuild
+from .schema.reset_password import schema_reset_password
 
 
 class Client(object):
@@ -23,7 +28,7 @@ class Client(object):
     def create_stacklets(self, data):
         if schema_stacklet.is_valid(data):
             response = requests.post(
-                "{}stacklets".format(self.url),
+                "{}stacklets/".format(self.url),
                 json=data,
                 headers={
                     "Content-Type": "application/json",
@@ -36,7 +41,7 @@ class Client(object):
 
     def delete_stacklets(self, id):
         response = requests.delete(
-            "{}stacklets/{}".format(self.url, id),
+            "{}stacklets/{}/".format(self.url, id),
             headers={
                 "Content-Type": "application/json",
                 "Authorization": "Token {}".format(self.key),
@@ -46,7 +51,7 @@ class Client(object):
 
     def detail_stacklets(self, id):
         response = requests.get(
-            "{}stacklets/{}".format(self.url, id),
+            "{}stacklets/{}/".format(self.url, id),
             headers={
                 "Content-Type": "application/json",
                 "Authorization": "Token {}".format(self.key),
@@ -56,7 +61,7 @@ class Client(object):
 
     def power_on(self, id):
         response = requests.post(
-            "{}stacklets/{}".format(self.url, id),
+            "{}stacklets/{}/".format(self.url, id),
             data={"action": "power_on"},
             headers={
                 "Content-Type": "application/json",
@@ -67,7 +72,7 @@ class Client(object):
 
     def power_off(self, id):
         response = requests.post(
-            "{}stacklets/{}".format(self.url, id),
+            "{}stacklets/{}/".format(self.url, id),
             data={"action": "power_off"},
             headers={
                 "Content-Type": "application/json",
@@ -78,7 +83,7 @@ class Client(object):
 
     def power_cycle(self, id):
         response = requests.post(
-            "{}stacklets/{}".format(self.url, id),
+            "{}stacklets/{}/".format(self.url, id),
             data={"action": "power_cycle"},
             headers={
                 "Content-Type": "application/json",
@@ -89,7 +94,7 @@ class Client(object):
 
     def stacklets(self, tag=""):
         response = requests.get(
-            "{}stacklets?tag_name=".format(self.url, tag),
+            "{}stacklets/?tag_name=".format(self.url, tag),
             headers={
                 "Content-Type": "application/json",
                 "Authorization": "Token {}".format(self.key),
@@ -99,7 +104,7 @@ class Client(object):
 
     def tags(self):
         response = requests.get(
-            "{}tags".format(self.url),
+            "{}tags/".format(self.url),
             headers={
                 "Content-Type": "application/json",
                 "Authorization": "Token {}".format(self.key),
@@ -109,7 +114,7 @@ class Client(object):
 
     def delete_tags(self, id):
         response = requests.delete(
-            "{}tags/{}".format(self.url, id),
+            "{}tags/{}/".format(self.url, id),
             headers={
                 "Content-Type": "application/json",
                 "Authorization": "Token {}".format(self.key),
@@ -119,7 +124,7 @@ class Client(object):
 
     def detail_tags(self, id):
         response = requests.get(
-            "{}tags/{}".format(self.url, id),
+            "{}tags/{}/".format(self.url, id),
             headers={
                 "Content-Type": "application/json",
                 "Authorization": "Token {}".format(self.key),
@@ -130,7 +135,7 @@ class Client(object):
     def create_tags(self, data):
         if schema_tag.is_valid(data):
             response = requests.post(
-                "{}tags".format(self.url),
+                "{}tags/".format(self.url),
                 json=data,
                 headers={
                     "Content-Type": "application/json",
@@ -143,7 +148,7 @@ class Client(object):
 
     def regions(self):
         response = requests.get(
-            "{}regions".format(self.url),
+            "{}regions/".format(self.url),
             headers={
                 "Content-Type": "application/json",
                 "Authorization": "Token {}".format(self.key),
@@ -153,7 +158,7 @@ class Client(object):
 
     def sizes(self):
         response = requests.get(
-            "{}sizes".format(self.url),
+            "{}sizes/".format(self.url),
             headers={
                 "Content-Type": "application/json",
                 "Authorization": "Token {}".format(self.key),
@@ -163,7 +168,7 @@ class Client(object):
 
     def distributions(self):
         response = requests.get(
-            "{}distributions".format(self.url),
+            "{}distributions/".format(self.url),
             headers={
                 "Content-Type": "application/json",
                 "Authorization": "Token {}".format(self.key),
@@ -173,7 +178,7 @@ class Client(object):
 
     def applications(self):
         response = requests.get(
-            "{}applications".format(self.url),
+            "{}applications/".format(self.url),
             headers={
                 "Content-Type": "application/json",
                 "Authorization": "Token {}".format(self.key),
@@ -183,7 +188,7 @@ class Client(object):
 
     def containers(self):
         response = requests.get(
-            "{}containers".format(self.url),
+            "{}containers/".format(self.url),
             headers={
                 "Content-Type": "application/json",
                 "Authorization": "Token {}".format(self.key),
@@ -194,7 +199,7 @@ class Client(object):
     def create_keys(self, data):
         if schema_key.is_valid(data):
             response = requests.post(
-                "{}keys".format(self.url),
+                "{}ssh_keys/".format(self.url),
                 json=data,
                 headers={
                     "Content-Type": "application/json",
@@ -205,9 +210,9 @@ class Client(object):
         else:
             return schema_key.validate(data)
 
-    def delete_stags(self, id):
+    def delete_keys(self, id):
         response = requests.delete(
-            "{}keys/{}".format(self.url, id),
+            "{}ssh_keys/{}/".format(self.url, id),
             headers={
                 "Content-Type": "application/json",
                 "Authorization": "Token {}".format(self.key),
@@ -217,10 +222,80 @@ class Client(object):
 
     def keys(self):
         response = requests.get(
-            "{}keys".format(self.url),
+            "{}ssh_keys/".format(self.url),
             headers={
                 "Content-Type": "application/json",
                 "Authorization": "Token {}".format(self.key),
             },
         )
         return response.json()
+
+    def resize(self, data, id):
+        if schema_resize.is_valid(data):
+            response = requests.post(
+                "{}stacklets/{}/".format(self.url, id),
+                data={"action": "resize", "size": data["size"], "disk": data["disk"]},
+                headers={
+                    "Content-Type": "application/json",
+                    "Authorization": "Token {}".format(self.key),
+                },
+            )
+            return response.json()
+        else:
+            return schema_resize.validate(data)
+
+    def snapshot(self, data, id):
+        if schema_snapshot.is_valid(data):
+            response = requests.post(
+                "{}stacklets/{}/".format(self.url, id),
+                data={"action": "snapshot", "name": data["name"]},
+                headers={
+                    "Content-Type": "application/json",
+                    "Authorization": "Token {}".format(self.key),
+                },
+            )
+            return response.json()
+        else:
+            return schema_snapshot.validate(data)
+
+    def rename(self, data, id):
+        if schema_rename.is_valid(data):
+            response = requests.post(
+                "{}stacklets/{}/".format(self.url, id),
+                data={"action": "rename", "name": data["name"]},
+                headers={
+                    "Content-Type": "application/json",
+                    "Authorization": "Token {}".format(self.key),
+                },
+            )
+            return response.json()
+        else:
+            return schema_rename.validate(data)
+
+    def rebuild(self, data, id):
+        if schema_rebuild.is_valid(data):
+            response = requests.post(
+                "{}stacklets/{}/".format(self.url, id),
+                data={"action": "rebuild", "image": data["image"]},
+                headers={
+                    "Content-Type": "application/json",
+                    "Authorization": "Token {}".format(self.key),
+                },
+            )
+            return response.json()
+        else:
+            return schema_rebuild.validate(data)
+
+    def reset_password(self, data, id):
+        if schema_reset_password.is_valid(data):
+            response = requests.post(
+                "{}stacklets/{}/".format(self.url, id),
+                data={"action": "reset_password", "password": data["password"]},
+                headers={
+                    "Content-Type": "application/json",
+                    "Authorization": "Token {}".format(self.key),
+                },
+            )
+            return response.json()
+        else:
+            return schema_reset_password.validate(data)

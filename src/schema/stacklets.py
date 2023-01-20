@@ -9,5 +9,7 @@ schema_stacklet = Schema(
         "backups": bool,
         "private_networking": bool,
         "tags": list,
+        "ssh_keys": list,
+        "password": str,
     }
 )

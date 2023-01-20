@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="hubgridcloud",
-    version="0.1.2",
+    version="0.2.1",
     description="The SimplyStack API allows you to manage Stacklets and resources within the SimplyStack cloud in a simple, programmatic way using conventional HTTP requests.",
     long_description="The SimplyStack API allows you to manage Stacklets and resources within the SimplyStack cloud in a simple, programmatic way using conventional HTTP requests. The endpoints are intuitive and powerful, allowing you to easily make calls to retrieve information or to execute actions.",
     keywords="python, cloud, hubgridcloud, server",
