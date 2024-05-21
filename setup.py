@@ -19,5 +19,5 @@ setup(
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
     ],
-    install_requires=["requests==2.31.0", "schema==0.7.5"],
+    install_requires=["requests==2.32.0", "schema==0.7.5"],
 )
